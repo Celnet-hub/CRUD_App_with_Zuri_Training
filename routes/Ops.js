@@ -7,24 +7,34 @@ function CRUD(app, db) {
   app.put("/", (req, res) => {
     //do something
     const note = {
-        Name: 'Chidubem Nwabuisi'
-          // Name: req.body.Name,
-          // Email: req.body.Email,
-          // Country: req.body.Country
-      };
-      db.collection("user profile").insertOne(note, (err, data) => {
-          if (err) {
-              console.error(err)
-          } else {
-              res.send(data.ops[0]);
-          }
-      })
+      Name: "Chidubem Nwabuisi",
+      // Name: req.body.Name,
+      // Email: req.body.Email,
+      // Country: req.body.Country
+    };
+    db.collection("user profile").insertOne(note, (err, data) => {
+      if (err) {
+        console.error(err);
+      } else {
+        res.send(data.ops[0]);
+      }
+    });
   });
 
   //READ
-  app.get("/profile", (req, res) => {
+  app.get("/profile/:id", (req, res) => {
     //do something
-      res.send('Hi dubem')
+    const id = req.params.id;
+    const details = { _id: new ObjectID(id) }; //items to be read.
+
+    //create a collection and name it 'my notes'
+    db.collection("user profile").findOne(details, (err, item) => {
+      if (err) {
+        res.send({ error: "An error has occurred" });
+      } else {
+        res.send(item);
+      }
+    });
   });
 
   //UPDATE
@@ -39,5 +49,5 @@ function CRUD(app, db) {
 }
 
 module.exports = function (app, db) {
-    CRUD(app, db);
-}
+  CRUD(app, db);
+};
