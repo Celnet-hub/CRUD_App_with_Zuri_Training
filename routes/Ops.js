@@ -4,12 +4,13 @@ let objectID = require("mongodb").ObjectID;
 
 function CRUD(app, db) {
   //CREATE
-  app.post("/", (req, res) => {
+  app.put("/", (req, res) => {
     //do something
-      const note = {
-          Name: req.body.Name,
-          Email: req.body.Email,
-          Country: req.body.Country
+    const note = {
+        Name: 'Chidubem Nwabuisi'
+          // Name: req.body.Name,
+          // Email: req.body.Email,
+          // Country: req.body.Country
       };
       db.collection("user profile").insertOne(note, (err, data) => {
           if (err) {
