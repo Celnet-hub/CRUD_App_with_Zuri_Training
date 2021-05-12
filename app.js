@@ -24,7 +24,7 @@ MongoClient.connect(
       
     // const CRUDops = require("./routes");
     // CRUDops(app, db);
-      require('./routes').CRUD(app,db)
+      require('./routes/Ops').CRUD(app,db)
   }
 );
 
