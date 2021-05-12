@@ -36,4 +36,6 @@ function CRUD(app, db) {
   });
 }
 
-module.exports = CRUD(app, db);
+module.exports = function (app, db) {
+    CRUD(app, db);
+}

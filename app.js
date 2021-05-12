@@ -22,9 +22,9 @@ MongoClient.connect(
 
       const db = database.db('myProfile');
       
-    // const CRUDops = require("./routes");
-    // CRUDops(app, db);
-      require('./routes/Ops').CRUD(app,db)
+    const CRUDops = require("./routes");
+    CRUDops(app, db);
+    //   require('./routes/Ops').CRUD(app,db)
   }
 );
 
