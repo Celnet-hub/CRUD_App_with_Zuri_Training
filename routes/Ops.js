@@ -4,7 +4,7 @@ let objectID = require("mongodb").ObjectID;
 
 function CRUD(app, db) {
   //CREATE
-  app.post("https://git.heroku.com/glacial-stream-35995.git", (req, res) => {
+  app.post("/", (req, res) => {
     //do something
       const note = {
           Name: req.body.Name,
@@ -23,6 +23,7 @@ function CRUD(app, db) {
   //READ
   app.get("/profile", (req, res) => {
     //do something
+      res.send('Hi dubem')
   });
 
   //UPDATE
