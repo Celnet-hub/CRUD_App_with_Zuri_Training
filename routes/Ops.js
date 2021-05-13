@@ -66,7 +66,9 @@ router.put("/update-profile/:id", (req, res) => {
   User.findByIdAndUpdate(
     req.params.id,
     {
-      name: req.body.name,
+      fullName: req.body.fullName,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
       email: req.body.email,
       country: req.body.country,
       institute: req.body.institute,
