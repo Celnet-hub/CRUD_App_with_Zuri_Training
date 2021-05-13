@@ -1,34 +1,37 @@
-//importing dependencies
 const express = require("express");
-const { MongoClient } = require("mongodb");
-const bodyParser = require("body-parser");
-const myDBconnection = require("./config/db.js");
-const { toUpperCase } = require("./config/db.js");
+const mongoose = require("mongoose");
 require("dotenv").config();
 
-//initialize app as an instance of express.
+//create an instance of express
 const app = express();
 
-//connect to the database
-MongoClient.connect(
-  myDBconnection,
-  { useNewUrlParser: true, useUnifiedTopology: true },
-  (err, database) => {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log("database connection has been established");
-    }
+//Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-      const db = database.db('myProfile');
-      
-    const CRUDops = require("./routes/Ops");
-    CRUDops(app, db);
-    //   require('./routes/Ops').CRUD(app,db)
-  }
+//Routes
+app.use('/', require('./routes/routes.js'));
+
+//create a connection to database
+const uriVariable = require("./config/db.js");
+mongoose.connect(
+	uriVariable,
+	{
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		useFindAndModify: true,
+	},
+	(err) => {
+		if (err) {
+			console.error(err);
+		} else {
+			console.log("Connection to database established");
+		}
+	},
 );
 
 const port = process.env.Port;
+
 app.listen(port, () => {
-  console.log(`My server is running on port ${port}`);
+	console.log(`server is live on port ${port}`);
 });
