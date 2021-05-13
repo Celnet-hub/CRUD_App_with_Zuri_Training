@@ -22,6 +22,6 @@ This task was given to improve my knowledge of APIs. A CRUD operations designed 
 
 This code is hosted in [Heroku]
 
-Find link to [git repo] (https://github.com/Celnet-hub/CRUD_App_with_Zuri_Training)
+Find link to [git repo](https://github.com/Celnet-hub/CRUD_App_with_Zuri_Training)
 
 
