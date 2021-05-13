@@ -8,7 +8,7 @@ const router = express.Router();
  * Second define the different C R U D operations.
  */
 
-const User = require("../model");
+const User = require("../model/model.js");
 
 //C = CREATE Ops
 router.post("/", (req, res) => {
