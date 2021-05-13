@@ -62,9 +62,9 @@ router.get("/user-profile/:firstName", (req, res) => {
 });
 
 //U = UPDATE ops
-router.put("/update-profile/:id", (req, res) => {
-  User.findByIdAndUpdate(
-    req.params.id,
+router.put("/update-profile/:firstName", (req, res) => {
+  User.findOne(
+    { firstName: req.params.firstName},
     {
       fullName: req.body.fullName,
       firstName: req.body.firstName,
