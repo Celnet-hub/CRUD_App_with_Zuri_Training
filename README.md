@@ -20,7 +20,7 @@ This task was given to improve my knowledge of APIs. A CRUD operations designed 
 **Delate Route** : This route is used to delete user fromt the database
 `router.delete("/delete-user/:id", (req, res))`
 
-This code is hosted in [Heroku](https://morning-woodland-35115.herokuapp.com/)
+This code is hosted in [Heroku](https://morning-woodland-35115.herokuapp.com/user-profile)
 
 Find link to [git repo](https://github.com/Celnet-hub/CRUD_App_with_Zuri_Training)
 
