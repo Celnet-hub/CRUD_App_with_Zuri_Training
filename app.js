@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //Routes
-app.use('/', require('./routes/routes.js'));
+app.use('/', require('./routes/Ops.js'));
 
 //create a connection to database
 const uriVariable = require("./config/db.js");
