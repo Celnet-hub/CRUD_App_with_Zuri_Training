@@ -2,7 +2,7 @@
 //use the enviroment variable to connect to my database
 require('dotenv').config();
 
-const password = process.env.PASSWORD;
+const password = process.env.PASSWORD || ZuriDB;
 const uri = `mongodb+srv://ZuriDB:${password}@zuridb1.rzwbb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
 //module to be exported to server.js
