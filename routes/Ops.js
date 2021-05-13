@@ -1,53 +1,103 @@
-//This modules handles all CRUD operations
+const express = require("express");
+const router = express.Router();
 
-let objectID = require("mongodb").ObjectID;
+/**
+ * Define the CRUD operations
+ *
+ * first: require database schema
+ * Second define the different C R U D operations.
+ */
 
-function CRUD(app, db) {
-  //CREATE
-  app.put("/", (req, res) => {
-    //do something
-    const note = {
-      Name: "Chidubem Nwabuisi",
-      // Name: req.body.Name,
-      // Email: req.body.Email,
-      // Country: req.body.Country
-    };
-    db.collection("user profile").insertOne(note, (err, data) => {
-      if (err) {
-        console.error(err);
-      } else {
-        res.send(data.ops[0]);
-      }
-    });
-  });
+const User = require("../model");
 
-  //READ
-  app.get("/profile/:id", (req, res) => {
-    //do something
-    const id = req.params.id;
-    const details = { _id: new ObjectID(id) }; //items to be read.
+//C = CREATE Ops
+router.post("/", (req, res) => {
+	//retrieve data from the body of a post request
+    let data = req.body.data;
+	User.create(
+		{
+			fullName: data.fullName,
+            firstName: data.firstName,
+            lastName: data.lastName,
+			email: data.email,
+			country: data.country,
+			institute: data.institute,
+		},
+		(err, newUser) => {
+			if (err) {
+				return res.status(500).json({ message: err });
+			} else {
+				return res
+					.status(200)
+					.json({ message: "User added to the Database", newUser });
+			}
+		},
+	);
+	console.log({ data });
+});
 
-    //create a collection and name it 'my notes'
-    db.collection("user profile").findOne(details, (err, item) => {
-      if (err) {
-        res.send({ error: "An error has occurred" });
-      } else {
-        res.send(item);
-      }
-    });
-  });
+//R = READ ops
+router.get("/user-profile", (req, res) => {
+	//find every user in the database
+	User.find({}, (err, userProfile) => {
+		if (err) {
+			return res.status(500).json({ message: err });
+		} else {
+			return res.status(200).json({ userProfile });
+		}
+	});
+});
 
-  //UPDATE
-  app.put("/update-profile", (req, res) => {
-    //do something
-  });
+router.get("/user-profile/:firstName", (req, res) => {
+	//find one user in the database
+	User.findOne({"firstName" : req.params.firstName}, (err, userProfile) => {
+		if (err) {
+			return res.status(500).json({ message: err });
+		} else if (!userProfile) {
+			return res.status(404).json({ message: "Oops... User not found" });
+		} else {
+			return res.status(200).json({ userProfile });
+		}
+	});
+});
 
-  //DELETE
-  app.delete("/del-items", (req, res) => {
-    //do something
-  });
-}
+//U = UPDATE ops
+router.put("/update-profile/:id", (req, res) => {
+	User.findByIdAndUpdate(
+		req.params.id,
+		{
+			name: req.body.name,
+			email: req.body.email,
+			country: req.body.country,
+			institute: req.body.institute,
+		},
+		(err, updatedInfo) => {
+			if (err) {
+				return res.status(500).json({ message: err });
+			} else {
+				updatedInfo.save((err) => {
+					if (err) {
+						return res.status(400).json({ message: err });
+					} else {
+						return res.status(200).json({ message: "User Profile updated" });
+					}
+				});
+			}
+		},
+	);
+});
 
-module.exports = function (app, db) {
-  CRUD(app, db);
-};
+// D = DELETE Ops
+router.delete("/delete-user/:id", (req, res) => {
+	User.findByIdAndDelete(req.params.id, (err, user) => {
+		if (err) {
+			return res.status(500).json({ message: err });
+		} else if (!user) {
+			return res.status(404).json({ message: "User does not exists" });
+		} else {
+			return res.status(200).json({ message: "User deleted" });
+		}
+	});
+});
+
+module.exports = router;
